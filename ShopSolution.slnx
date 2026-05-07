@@ -3,4 +3,5 @@
   <Project Path="Gateway.Api/Gateway.Api.csproj" />
   <Project Path="Orders.Api/Orders.Api.csproj" />
   <Project Path="Users.Api/Users.Api.csproj" />
+  <Project Path="Catalog.Api.Tests/Catalog.Api.Tests.csproj" />
 </Solution>

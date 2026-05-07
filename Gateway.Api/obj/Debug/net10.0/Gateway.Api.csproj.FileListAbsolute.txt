@@ -33,3 +33,4 @@ C:\Users\Juan\Documents\repos\ShopSolution\Gateway.Api\obj\Debug\net10.0\refint\
 C:\Users\Juan\Documents\repos\ShopSolution\Gateway.Api\obj\Debug\net10.0\Gateway.Api.pdb
 C:\Users\Juan\Documents\repos\ShopSolution\Gateway.Api\obj\Debug\net10.0\Gateway.Api.genruntimeconfig.cache
 C:\Users\Juan\Documents\repos\ShopSolution\Gateway.Api\obj\Debug\net10.0\ref\Gateway.Api.dll
+C:\Users\Juan\Documents\repos\ShopSolution\Gateway.Api\obj\Debug\net10.0\Gateway.Api.sourcelink.json

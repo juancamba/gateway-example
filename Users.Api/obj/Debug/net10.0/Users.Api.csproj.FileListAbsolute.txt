@@ -31,3 +31,4 @@ C:\Users\Juan\Documents\repos\ShopSolution\Users.Api\obj\Debug\net10.0\refint\Us
 C:\Users\Juan\Documents\repos\ShopSolution\Users.Api\obj\Debug\net10.0\Users.Api.pdb
 C:\Users\Juan\Documents\repos\ShopSolution\Users.Api\obj\Debug\net10.0\Users.Api.genruntimeconfig.cache
 C:\Users\Juan\Documents\repos\ShopSolution\Users.Api\obj\Debug\net10.0\ref\Users.Api.dll
+C:\Users\Juan\Documents\repos\ShopSolution\Users.Api\obj\Debug\net10.0\Users.Api.sourcelink.json
