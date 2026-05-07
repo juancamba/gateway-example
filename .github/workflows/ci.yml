@@ -1,0 +1,53 @@
+name: Microservices CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker-compose-build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore dependencies
+        run: |
+          dotnet restore ./Gateway.Api/Gateway.Api.csproj
+          dotnet restore ./Users.Api/Users.Api.csproj
+          dotnet restore ./Orders.Api/Orders.Api.csproj
+          dotnet restore ./Catalog.Api/Catalog.Api.csproj
+
+      - name: Build projects
+        run: |
+          dotnet build ./Gateway.Api/Gateway.Api.csproj --no-restore
+          dotnet build ./Users.Api/Users.Api.csproj --no-restore
+          dotnet build ./Orders.Api/Orders.Api.csproj --no-restore
+          dotnet build ./Catalog.Api/Catalog.Api.csproj --no-restore
+
+      - name: Build Docker containers
+        run: docker compose build
+
+      - name: Start containers
+        run: docker compose up -d
+
+      - name: Show running containers
+        run: docker ps
+
+      - name: Stop containers
+        run: docker compose down
+
