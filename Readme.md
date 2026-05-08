@@ -101,6 +101,23 @@ docker compose -f docker-compose-pull.yml up -d
 
 ## Tercera versión, agregamos CD
 
+```
+GitHub Actions
+   ↓
+docker build
+   ↓
+docker push
+   ↓
+Watchtower detecta nueva imagen
+   ↓
+docker pull automático
+   ↓
+reinicia containers
+
+```
+
+
+
 Agregamos al docker compose-pull.yml watchtower
 ````
   watchtower:
