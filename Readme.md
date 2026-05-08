@@ -73,3 +73,44 @@ docker compose up
 
 YArp: 
 https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/yarp/config-files?view=aspnetcore-10.0
+
+
+# Parte de CI/CD
+
+Primero hemos agregado la parte de ci en github. Para eso agregamos el directorio .github/workflows/ci.yml
+
+
+## Primera versión
+En esta primera versión simplementa hacemos un CI en github levantando containers y lanzando test
+
+## SEgunda versión
+
+Nota que estamos en la segunda versión . En ella hago un push a mi cuenta de dockerHub
+
+
+He cambiado el docker compose que se ahora se encuentra en docker-compose-pull.yml porque ahora hace un pull de dockerhub en vez de builder la imagen , lo que se hace en docker-compose.yml para uso local
+
+levantar el servicio, haciendo pull de docker hub
+
+```
+docker compose -f docker-compose-pull.yml pull
+
+docker compose -f docker-compose-pull.yml up -d
+
+```
+
+## Tercera versión, agregamos CD
+
+Agregamos al docker compose-pull.yml watchtower
+````
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    command: --interval 30
+
+    restart: always
+```
