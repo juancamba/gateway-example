@@ -1,0 +1,58 @@
+name: Microservices CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - 'v*'  
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  build-test-push:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore dependencies
+        run: |
+          dotnet restore ./Gateway.Api/Gateway.Api.csproj
+          dotnet restore ./Users.Api/Users.Api.csproj
+          dotnet restore ./Orders.Api/Orders.Api.csproj
+          dotnet restore ./Catalog.Api/Catalog.Api.csproj
+
+      - name: Build projects
+        run: |
+          dotnet build ./Gateway.Api/Gateway.Api.csproj --no-restore
+          dotnet build ./Users.Api/Users.Api.csproj --no-restore
+          dotnet build ./Orders.Api/Orders.Api.csproj --no-restore
+          dotnet build ./Catalog.Api/Catalog.Api.csproj --no-restore
+
+      - name: Run tests
+        run: dotnet test --no-build
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker images
+        run: docker compose build
+
+      - name: Push Docker images
+        run: docker compose push

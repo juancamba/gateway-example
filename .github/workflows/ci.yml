@@ -5,8 +5,9 @@ on:
     branches:
       - main
       - develop
+
     tags:
-      - 'v*'  
+      - 'v*'
 
   pull_request:
     branches:
@@ -45,14 +46,68 @@ jobs:
       - name: Run tests
         run: dotnet test --no-build
 
+      - name: Extract version
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker images
-        run: docker compose build
+      # USERS API
 
-      - name: Push Docker images
-        run: docker compose push
+      - name: Build Users API
+        run: |
+          docker build \
+            -t juancamba/users.api:${{ steps.version.outputs.VERSION }} \
+            -t juancamba/users.api:latest \
+            ./Users.Api
+
+      - name: Push Users API
+        run: |
+          docker push juancamba/users.api:${{ steps.version.outputs.VERSION }}
+          docker push juancamba/users.api:latest
+
+      # ORDERS API
+
+      - name: Build Orders API
+        run: |
+          docker build \
+            -t juancamba/orders.api:${{ steps.version.outputs.VERSION }} \
+            -t juancamba/orders.api:latest \
+            ./Orders.Api
+
+      - name: Push Orders API
+        run: |
+          docker push juancamba/orders.api:${{ steps.version.outputs.VERSION }}
+          docker push juancamba/orders.api:latest
+
+      # CATALOG API
+
+      - name: Build Catalog API
+        run: |
+          docker build \
+            -t juancamba/catalog.api:${{ steps.version.outputs.VERSION }} \
+            -t juancamba/catalog.api:latest \
+            ./Catalog.Api
+
+      - name: Push Catalog API
+        run: |
+          docker push juancamba/catalog.api:${{ steps.version.outputs.VERSION }}
+          docker push juancamba/catalog.api:latest
+
+      # GATEWAY API
+
+      - name: Build Gateway API
+        run: |
+          docker build \
+            -t juancamba/gateway.api:${{ steps.version.outputs.VERSION }} \
+            -t juancamba/gateway.api:latest \
+            ./Gateway.Api
+
+      - name: Push Gateway API
+        run: |
+          docker push juancamba/gateway.api:${{ steps.version.outputs.VERSION }}
+          docker push juancamba/gateway.api:latest
