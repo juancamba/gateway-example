@@ -39,11 +39,13 @@ jobs:
           dotnet build ./Orders.Api/Orders.Api.csproj --no-restore
           dotnet build ./Catalog.Api/Catalog.Api.csproj --no-restore
 
+      - name: Run Tests
+        run: dotnet test  
+    
       - name: Build Docker containers
         run: docker compose build
 
-      - name: Run Tests
-        run: dotnet test  
+    
 
       - name: Start containers
         run: docker compose up -d
