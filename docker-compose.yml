@@ -2,28 +2,28 @@ version: "3.9"
 
 services:
   gateway.api:
+    image: juancamba/gateway.api:latest
     build:
       context: ./Gateway.Api
     ports:
       - "5000:8080"
-    depends_on:
-      - users.api
-      - orders.api
-      - catalog.api
 
   users.api:
+    image: juancamba/users.api:latest
     build:
       context: ./Users.Api
     ports:
       - "5001:8080"
 
   orders.api:
+    image: juancamba/orders.api:latest
     build:
       context: ./Orders.Api
     ports:
       - "5002:8080"
 
   catalog.api:
+    image: juancamba/catalog.api:latest
     build:
       context: ./Catalog.Api
     ports:
